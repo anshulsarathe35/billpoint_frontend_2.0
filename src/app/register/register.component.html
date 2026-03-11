@@ -1,0 +1,143 @@
+<!-- <h2>Register</h2>
+
+<form (ngSubmit)="onSubmit()">
+
+  <input
+    type="text"
+    name="username"
+    placeholder="Username"
+    [(ngModel)]="form.username"
+    required
+  />
+
+  <input
+    type="email"
+    name="email"
+    placeholder="Email"
+    [(ngModel)]="form.email"
+    required
+  />
+
+  <input
+    type="password"
+    name="password"
+    placeholder="Password"
+    [(ngModel)]="form.password"
+    required
+  />
+
+  <input
+    type="text"
+    name="phone"
+    placeholder="Phone"
+    [(ngModel)]="form.phone"
+  />
+
+  <select name="role" [(ngModel)]="form.role">
+    <option value="CUSTOMER">Customer</option>
+    <option value="STAFF">Staff</option>
+    <option value="SHOP_OWNER">Shop Owner</option>
+  </select>
+
+  <button type="submit">Register</button>
+
+</form>
+
+<p *ngIf="message">{{message}}</p>
+<p *ngIf="error">{{error}}</p> -->
+
+<div class="login-wrapper">
+  <div class="login-card">
+
+    <div class="logo-section">
+      <div class="icon">🛒</div>
+      <h1>BillPoint</h1>
+      <p>Retail Management System</p>
+    </div>
+
+    <div class="form-section">
+      <h2>Create Account</h2>
+      <p class="subtitle">Register to start using BillPoint.</p>
+
+      <div *ngIf="error" class="error-banner">
+        {{ error }}
+      </div>
+
+      <div *ngIf="message" class="success-banner">
+        {{ message }}
+      </div>
+
+      <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+
+        <div class="input-group">
+          <label>Username</label>
+          <input
+            type="text"
+            name="username"
+            [(ngModel)]="form.username"
+            placeholder="Enter username"
+            required
+          />
+        </div>
+
+        <div class="input-group">
+          <label>Email</label>
+          <input
+            type="email"
+            name="email"
+            [(ngModel)]="form.email"
+            placeholder="Enter email"
+            required
+          />
+        </div>
+
+        <div class="input-group">
+          <label>Password</label>
+          <input
+            type="password"
+            name="password"
+            [(ngModel)]="form.password"
+            placeholder="••••••••"
+            required
+          />
+        </div>
+
+        <div class="input-group">
+          <label>Phone</label>
+          <input
+            type="text"
+            name="phone"
+            [(ngModel)]="form.phone"
+            placeholder="Enter phone number"
+          />
+        </div>
+
+        <div class="input-group">
+          <label>Role</label>
+          <select name="role" [(ngModel)]="form.role">
+            <option value="CUSTOMER">Customer</option>
+            <option value="STAFF">Staff</option>
+            <option value="SHOP_OWNER">Shop Owner</option>
+          </select>
+        </div>
+
+        <button
+          type="submit"
+          [disabled]="!registerForm.form.valid"
+          class="btn-primary"
+        >
+          Register
+        </button>
+
+      </form>
+
+      <div class="demo-hints">
+        <p>
+          Already have an account?
+          <a routerLink="/login">Login</a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>

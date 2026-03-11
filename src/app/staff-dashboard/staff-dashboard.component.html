@@ -1,0 +1,137 @@
+<div class="dashboard-layout">
+  <!-- Sidebar -->
+  <aside class="sidebar staff-sidebar">
+    <div class="sidebar-header">
+      <div class="logo">🎯 BillPoint</div>
+      <div class="role-badge staff-badge">Staff Member</div>
+    </div>
+    
+    <nav class="nav-menu">
+      <button [class.active]="activeTab === 'billing'" (click)="activeTab = 'billing'" class="nav-item">
+        <span class="icon">🧾</span> POS & Billing
+      </button>
+      <button [class.active]="activeTab === 'customers'" (click)="activeTab = 'customers'" class="nav-item">
+        <span class="icon">👥</span> Customers
+      </button>
+      <button [class.active]="activeTab === 'attendance'" (click)="activeTab = 'attendance'" class="nav-item">
+        <span class="icon">⏱️</span> Attendance
+      </button>
+    </nav>
+    
+    <div class="sidebar-footer">
+      <button class="btn-logout" (click)="logout()">
+        <span class="icon">🚪</span> Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <header class="top-header">
+      <h2>Staff Portal</h2>
+    </header>
+
+    <!-- ATTENDANCE TAB -->
+    <div class="content-body" *ngIf="activeTab === 'attendance'">
+      <div class="section-heading">
+        <h3>Daily Attendance</h3>
+        <p>Please log your shift start and end times.</p>
+      </div>
+
+      <div class="attendance-actions">
+        <button class="btn-primary" (click)="checkIn()">Sign In (Start Shift)</button>
+        <button class="btn-danger" (click)="checkOut()">Sign Out (End Shift)</button>
+      </div>
+    </div>
+
+    <!-- CUSTOMERS TAB -->
+    <div class="content-body" *ngIf="activeTab === 'customers'">
+      <div class="section-heading">
+        <h3>Register New Customer</h3>
+      </div>
+      
+      <div class="card-form mb-4">
+        <div class="form-grid">
+          <input type="text" [(ngModel)]="newCustomer.name" placeholder="Customer Name">
+          <input type="text" [(ngModel)]="newCustomer.phone" placeholder="Phone Number">
+          <input type="email" [(ngModel)]="newCustomer.email" placeholder="Email (Optional)">
+          <button class="btn-primary" (click)="addCustomer()">Register</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BILLING TAB -->
+    <div class="content-body" *ngIf="activeTab === 'billing'">
+      <div class="pos-layout">
+        <!-- Main POS Area (Products) -->
+        <div class="pos-products">
+          <div class="customer-search mb-4">
+            <input type="text" [(ngModel)]="customerPhoneSearch" placeholder="Search Customer by Phone">
+            <button class="btn-primary" (click)="searchCustomer()">Find</button>
+          </div>
+
+          <div *ngIf="selectedCustomer" class="active-customer mb-4">
+            Billing for: <strong>{{selectedCustomer.name}}</strong> ({{selectedCustomer.phone}})
+          </div>
+
+          <div class="product-grid">
+            <!-- Mock visual if products aren't available due to API constraints -->
+            <div class="product-card">
+              <div class="p-name">Sample Item 1</div>
+              <div class="p-price">Rs. 500</div>
+              <button class="btn-sm btn-primary mt-2" (click)="addToCart({id:1, name:'Sample Item 1', price: 500})">Add</button>
+            </div>
+            <div class="product-card">
+              <div class="p-name">Sample Item 2</div>
+              <div class="p-price">Rs. 250</div>
+              <button class="btn-sm btn-primary mt-2" (click)="addToCart({id:2, name:'Sample Item 2', price: 250})">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Checkout Sidebar -->
+        <div class="checkout-panel">
+          <h3>Current Cart</h3>
+          <div class="cart-items">
+            <div class="cart-item" *ngFor="let item of cart; let idx = index">
+              <div class="item-info">
+                <span class="name">{{item.name}} x{{item.quantity}}</span>
+                <span class="price">Rs. {{item.totalPrice}}</span>
+              </div>
+              <button class="btn-sm text-danger" (click)="removeFromCart(idx)">×</button>
+            </div>
+            <div *ngIf="cart.length === 0" class="empty-state">Cart is empty.</div>
+          </div>
+
+          <div class="checkout-summary">
+            <div class="summary-line">
+              <span>Subtotal</span>
+              <span>Rs. {{cartTotal}}</span>
+            </div>
+            <div class="summary-line">
+              <span>Discount (Rs.)</span>
+              <input type="number" [(ngModel)]="discount" class="discount-input">
+            </div>
+            <div class="summary-line total">
+              <span>Total</span>
+              <span>Rs. {{finalAmount}}</span>
+            </div>
+
+            <div class="payment-mode mt-3">
+              <select [(ngModel)]="paymentMode">
+                <option value="CASH">Cash</option>
+                <option value="CARD">Card</option>
+                <option value="UPI">UPI</option>
+              </select>
+            </div>
+
+            <button class="btn-primary w-100 mt-3 p-3 font-bold text-lg" (click)="generateBill()">
+              Complete Billing
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>

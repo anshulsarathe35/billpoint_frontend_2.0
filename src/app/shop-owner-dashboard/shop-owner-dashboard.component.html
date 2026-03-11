@@ -1,0 +1,191 @@
+<div class="dashboard-layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">🎯 BillPoint</div>
+      <div class="role-badge">Shop Owner</div>
+    </div>
+    
+    <nav class="nav-menu">
+      <button [class.active]="activeTab === 'inventory'" (click)="activeTab = 'inventory'" class="nav-item">
+        <span class="icon">📦</span> Inventory
+      </button>
+      <button [class.active]="activeTab === 'staff'" (click)="activeTab = 'staff'" class="nav-item">
+        <span class="icon">👥</span> Staff Members
+      </button>
+      <button [class.active]="activeTab === 'offers'" (click)="activeTab = 'offers'" class="nav-item">
+        <span class="icon">🎁</span> Promotions
+      </button>
+      <button [class.active]="activeTab === 'reports'" (click)="activeTab = 'reports'" class="nav-item">
+        <span class="icon">📈</span> Reports
+      </button>
+    </nav>
+    
+    <div class="sidebar-footer">
+      <button class="btn-logout" (click)="logout()">
+        <span class="icon">🚪</span> Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <header class="top-header">
+      <h2>Owner Control Panel</h2>
+      <div class="quick-stats">Revenue: <strong class="text-success">Rs. {{revenue}}</strong></div>
+    </header>
+
+    <!-- INVENTORY TAB -->
+    <div class="content-body" *ngIf="activeTab === 'inventory'">
+      <div class="header-action-row">
+        <h3>Inventory Management</h3>
+      </div>
+      
+      <div class="card-form mb-4">
+        <h4>Add New Product</h4>
+        <div class="form-grid">
+          <input type="text" [(ngModel)]="newProduct.name" placeholder="Product Name">
+          <input type="text" [(ngModel)]="newProduct.sku" placeholder="SKU">
+          <input type="number" [(ngModel)]="newProduct.price" placeholder="Price">
+          <input type="number" [(ngModel)]="newProduct.stockQuantity" placeholder="Stock Qty">
+          <button class="btn-primary" (click)="addProduct()">Add Product</button>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>SKU</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of products">
+              <td>#{{p.id}}</td>
+              <td><strong>{{p.name}}</strong></td>
+              <td>{{p.sku}}</td>
+              <td>Rs. {{p.price}}</td>
+              <td [ngClass]="p.stockQuantity < 5 ? 'text-danger fw-bold' : ''">{{p.stockQuantity}}</td>
+              <td><button class="btn-sm btn-danger" (click)="deleteProduct(p.id)">Delete</button></td>
+            </tr>
+            <tr *ngIf="products.length === 0">
+              <td colspan="6" class="empty-state">No products found constraint.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    <!-- STAFF TAB -->
+    <div class="content-body" *ngIf="activeTab === 'staff'">
+      <div class="header-action-row">
+        <h3>Staff Management</h3>
+      </div>
+
+      <div class="card-form mb-4">
+        <h4>Register New Staff Account</h4>
+        <div class="form-grid">
+          <input type="text" [(ngModel)]="newStaff.username" placeholder="Staff Username">
+          <input type="email" [(ngModel)]="newStaff.email" placeholder="Email">
+          <input type="text" [(ngModel)]="newStaff.phone" placeholder="Phone">
+          <input type="password" [(ngModel)]="newStaff.password" placeholder="Password">
+          <button class="btn-primary" (click)="addStaff()">Register Staff</button>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Staff ID</th>
+              <th>Name / Username</th>
+              <th>Join Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let s of staffList">
+              <td>#{{s.id}}</td>
+              <td>{{s.name}}</td>
+              <td>{{s.createdAt | date}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    <!-- OFFERS TAB -->
+    <div class="content-body" *ngIf="activeTab === 'offers'">
+      <div class="header-action-row">
+        <h3>Promotions & Offers</h3>
+      </div>
+
+      <div class="card-form mb-4">
+        <h4>Create New Offer</h4>
+        <div class="form-grid">
+          <input type="text" [(ngModel)]="newOffer.title" placeholder="Offer Title (e.g., Summer Sale)">
+          <input type="number" [(ngModel)]="newOffer.discountPercentage" placeholder="Discount %">
+          <input type="date" [(ngModel)]="newOffer.validFrom" placeholder="Valid From">
+          <input type="date" [(ngModel)]="newOffer.validTo" placeholder="Valid To">
+          <button class="btn-primary" (click)="addOffer()">Publish Offer</button>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Discount</th>
+              <th>Validity</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let o of offers">
+              <td><strong>{{o.title}}</strong></td>
+              <td>{{o.discountPercentage}}%</td>
+              <td>{{o.validFrom}} to {{o.validTo}}</td>
+              <td><span class="status-badge active" *ngIf="o.isActive">Active</span></td>
+              <td><button class="btn-sm btn-danger" (click)="deactivateOffer(o.id)">Deactivate</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    <!-- REPORTS TAB -->
+    <div class="content-body" *ngIf="activeTab === 'reports'">
+      <div class="section-heading">
+        <h3>Financial Reports</h3>
+        <p>Analyze your business performance.</p>
+      </div>
+      
+      <div class="stats-grid mb-4">
+        <div class="stat-card">
+          <h4>Total Revenue</h4>
+          <div class="value text-success">Rs. {{revenue}}</div>
+        </div>
+        <div class="stat-card">
+          <h4>Products Count</h4>
+          <div class="value">{{products.length}}</div>
+        </div>
+      </div>
+
+      <div class="card-action">
+        <h4>Detailed Sales Report</h4>
+        <p>Download a detailed PDF report of all bills generated in your shop.</p>
+        <button class="btn-primary" (click)="downloadReport()">Download PDF Report</button>
+      </div>
+    </div>
+
+  </main>
+</div>

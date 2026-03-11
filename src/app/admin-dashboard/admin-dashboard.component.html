@@ -1,0 +1,152 @@
+<div class="dashboard-layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">🎯 BillPoint</div>
+      <div class="role-badge">Administrator</div>
+    </div>
+    
+    <nav class="nav-menu">
+      <button 
+        [class.active]="activeTab === 'requests'" 
+        (click)="activeTab = 'requests'" class="nav-item">
+        <span class="icon">📬</span> Shop Requests
+      </button>
+      <button 
+        [class.active]="activeTab === 'shops'" 
+        (click)="activeTab = 'shops'" class="nav-item">
+        <span class="icon">🏪</span> Manage Shops
+      </button>
+      <button 
+        [class.active]="activeTab === 'analytics'" 
+        (click)="activeTab = 'analytics'" class="nav-item">
+        <span class="icon">📊</span> System Analytics
+      </button>
+    </nav>
+    
+    <div class="sidebar-footer">
+      <button class="btn-logout" (click)="logout()">
+        <span class="icon">🚪</span> Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <header class="top-header">
+      <h2>Welcome, Admin!</h2>
+      <div class="date-display">{{ today | date:'mediumDate' }}</div> <!-- just visual mockup -->
+    </header>
+
+    <div class="content-body" *ngIf="activeTab === 'requests'">
+      <div class="section-heading">
+        <h3>Pending Shop Registrations</h3>
+        <p>Review and approve new shops joining the platform.</p>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Owner Name</th>
+              <th>Shop Name</th>
+              <th>Email</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let req of shopRequests">
+              <td>#{{ req.id }}</td>
+              <td>{{ req.ownerName }}</td>
+              <td><strong>{{ req.shopName }}</strong></td>
+              <td>{{ req.email }}</td>
+              <td>
+                <span class="status-badge" [ngClass]="req.status.toLowerCase()">
+                  {{ req.status }}
+                </span>
+              </td>
+              <td class="action-cell">
+                <ng-container *ngIf="req.status === 'PENDING'">
+                  <div class="approval-form">
+                    <input type="text" [(ngModel)]="approvalPlan" placeholder="Plan (e.g., Premium)">
+                    <input type="number" [(ngModel)]="validMonths" placeholder="Months" style="width: 70px;">
+                    <button class="btn-sm btn-success" (click)="approveRequest(req.id)">Approve</button>
+                    <button class="btn-sm btn-danger" (click)="rejectRequest(req.id)">Reject</button>
+                  </div>
+                </ng-container>
+                <div *ngIf="req.status !== 'PENDING'" class="text-muted">
+                  Resolved
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="shopRequests.length === 0">
+              <td colspan="6" class="empty-state">No requests found.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    <div class="content-body" *ngIf="activeTab === 'shops'">
+      <div class="section-heading">
+        <h3>Registered Shops</h3>
+        <p>Manage all active retail partners in the system.</p>
+      </div>
+      
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Shop ID</th>
+              <th>Shop Name</th>
+              <th>Owner ID</th>
+              <th>Contact Email</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let shop of shops">
+              <td>#{{ shop.id }}</td>
+              <td><strong>{{ shop.name }}</strong></td>
+              <td>UID-{{ shop.ownerId }}</td>
+              <td>{{ shop.email }}</td>
+              <td>
+                <span class="status-badge active" *ngIf="shop.isActive">Active</span>
+                <span class="status-badge inactive" *ngIf="!shop.isActive">Inactive</span>
+              </td>
+            </tr>
+            <tr *ngIf="shops.length === 0">
+              <td colspan="5" class="empty-state">No shops onboarded yet.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    <div class="content-body" *ngIf="activeTab === 'analytics'">
+      <div class="section-heading">
+        <h3>System Analytics</h3>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h4>Total Shops</h4>
+          <div class="value">{{ shops.length }}</div>
+        </div>
+        <div class="stat-card">
+          <h4>Pending Requests</h4>
+          <div class="value">{{ pendingRequestsCount }}</div>
+        </div>
+        <!-- Mock data for analytics -->
+        <div class="stat-card">
+          <h4>Active Subscriptions</h4>
+          <div class="value">{{ shops.length }}</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>

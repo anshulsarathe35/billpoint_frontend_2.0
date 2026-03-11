@@ -1,0 +1,99 @@
+/* Inherits layout from the shared approach similar to Admin Dashboard */
+@import '../admin-dashboard/admin-dashboard.component.scss';
+
+.mb-4 {
+  margin-bottom: 30px;
+}
+
+.card-form {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  border-left: 4px solid #10b981;
+  
+  h4 {
+    margin: 0 0 20px 0;
+    font-size: 18px;
+    color: #1e293b;
+  }
+}
+
+.form-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  
+  input {
+    flex: 1;
+    min-width: 200px;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+    
+    &:focus {
+      outline: none;
+      border-color: #10b981;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    }
+  }
+  
+  .btn-primary {
+    padding: 0 24px;
+    background: #10b981;
+    color: white;
+    font-weight: 600;
+    
+    &:hover {
+      background: #059669;
+    }
+  }
+}
+
+.card-action {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  
+  p {
+    color: #64748b;
+    margin-bottom: 20px;
+  }
+  
+  .btn-primary {
+    background: #f59e0b;
+    color: white;
+    padding: 14px 28px;
+    font-size: 16px;
+    
+    &:hover {
+      background: #d97706;
+    }
+  }
+}
+
+.text-danger { color: #dc2626; }
+.text-success { color: #059669; }
+.fw-bold { font-weight: 700; }
+
+.header-action-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  
+  h3 { margin: 0; font-size: 24px; color: #0f172a; }
+}
+
+.sidebar .sidebar-header .role-badge {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+}
+
+.sidebar .nav-menu .nav-item.active {
+    background: #10b981;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}

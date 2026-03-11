@@ -1,0 +1,56 @@
+<div class="login-wrapper">
+  <div class="login-card">
+    <div class="logo-section">
+      <div class="icon">🛒</div>
+      <h1>BillPoint</h1>
+      <p>Retail Management System</p>
+    </div>
+    
+    <div class="form-section">
+      <h2>Welcome Back</h2>
+      <p class="subtitle">Please enter your details to sign in.</p>
+
+      <div *ngIf="errorMessage" class="error-banner">
+        {{ errorMessage }}
+      </div>
+
+      <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+        <div class="input-group">
+          <label for="username">Username</label>
+          <input 
+            type="text" 
+            id="username" 
+            name="username" 
+            [(ngModel)]="credentials.username" 
+            required
+            placeholder="Enter username"
+          />
+        </div>
+
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            [(ngModel)]="credentials.password" 
+            required
+            placeholder="••••••••"
+          />
+        </div>
+
+        <button type="submit" [disabled]="!loginForm.form.valid || isLoading" class="btn-primary">
+          <span *ngIf="!isLoading">Sign In</span>
+          <span *ngIf="isLoading" class="spinner"></span>
+        </button>
+      </form>
+      
+      <div class="demo-hints">
+        <p><strong>Demo Roles:</strong> admin | shop | staff | cust</p>
+      <p>
+Don't have an account?
+<a href ="/register">Register</a></div>
+    </div>
+  </div>
+  
+</div>

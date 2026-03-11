@@ -1,0 +1,90 @@
+<div class="dashboard-layout">
+  <!-- Sidebar -->
+  <aside class="sidebar customer-sidebar">
+    <div class="sidebar-header">
+      <div class="logo">🎯 BillPoint</div>
+      <div class="role-badge cust-badge">Valued Customer</div>
+    </div>
+    
+    <nav class="nav-menu">
+      <button [class.active]="activeTab === 'history'" (click)="activeTab = 'history'" class="nav-item">
+        <span class="icon">🛒</span> Purchase History
+      </button>
+      <button [class.active]="activeTab === 'offers'" (click)="activeTab = 'offers'" class="nav-item">
+        <span class="icon">🎉</span> My Offers & Deals
+      </button>
+    </nav>
+    
+    <div class="sidebar-footer">
+      <button class="btn-logout" (click)="logout()">
+        <span class="icon">🚪</span> Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <header class="top-header">
+      <h2>My Dashboard</h2>
+    </header>
+
+    <!-- PURCHASE HISTORY -->
+    <div class="content-body" *ngIf="activeTab === 'history'">
+      <div class="section-heading">
+        <h3>My Purchase History</h3>
+        <p>Review your past bills and purchases across our partner shops.</p>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Bill ID</th>
+              <th>Date</th>
+              <th>Final Amount</th>
+              <th>Payment Mode</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let bill of bills">
+              <td><strong>#{{bill.id}}</strong></td>
+              <td>{{bill.createdAt | date:'mediumDate'}}</td>
+              <td>Rs. {{bill.finalAmount}}</td>
+              <td>{{bill.paymentMode}}</td>
+              <td><span class="status-badge approved">Paid</span></td>
+            </tr>
+            <tr *ngIf="bills.length === 0">
+              <td colspan="5" class="empty-state">No purchases found. Visit our shops to see your history here!</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- OFFERS -->
+    <div class="content-body" *ngIf="activeTab === 'offers'">
+      <div class="section-heading">
+        <h3>Available Offers</h3>
+        <p>Special deals exclusively for you.</p>
+      </div>
+
+      <div class="offers-grid">
+        <div class="offer-card" *ngFor="let offer of offers">
+          <div class="discount-circle">{{offer.discountPercentage}}%<br>OFF</div>
+          <h4>{{offer.title}}</h4>
+          <p class="validity">Valid until {{offer.validTo | date}}</p>
+          <div class="shop-name">Shop Partner</div>
+          <button class="btn-primary mt-3 w-100">Claim Offer</button>
+        </div>
+        
+        <div *ngIf="offers.length === 0" class="empty-offers">
+          <div class="icon">🎁</div>
+          <h4>No active offers right now</h4>
+          <p>Check back later for exclusive deals from your favorite shops.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
