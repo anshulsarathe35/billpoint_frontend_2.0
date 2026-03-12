@@ -1,56 +1,98 @@
 <div class="login-wrapper">
-  <div class="login-card">
-    <div class="logo-section">
-      <div class="icon">🛒</div>
-      <h1>BillPoint</h1>
-      <p>Retail Management System</p>
-    </div>
-    
-    <div class="form-section">
-      <h2>Welcome Back</h2>
-      <p class="subtitle">Please enter your details to sign in.</p>
-
-      <div *ngIf="errorMessage" class="error-banner">
-        {{ errorMessage }}
-      </div>
-
-      <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-        <div class="input-group">
-          <label for="username">Username</label>
-          <input 
-            type="text" 
-            id="username" 
-            name="username" 
-            [(ngModel)]="credentials.username" 
-            required
-            placeholder="Enter username"
-          />
-        </div>
-
-        <div class="input-group">
-          <label for="password">Password</label>
-          <input 
-            type="password" 
-            id="password" 
-            name="password" 
-            [(ngModel)]="credentials.password" 
-            required
-            placeholder="••••••••"
-          />
-        </div>
-
-        <button type="submit" [disabled]="!loginForm.form.valid || isLoading" class="btn-primary">
-          <span *ngIf="!isLoading">Sign In</span>
-          <span *ngIf="isLoading" class="spinner"></span>
-        </button>
-      </form>
-      
-      <div class="demo-hints">
-        <p><strong>Demo Roles:</strong> admin | shop | staff | cust</p>
-      <p>
-Don't have an account?
-<a href ="/register">Register</a></div>
-    </div>
+  <div class="logo-top">
+    <div class="icon">💻</div>
+    <h1>BillPoint</h1>
   </div>
   
+  <div class="login-header">
+    <h2>Welcome Back</h2>
+    <p>Select your role to sign in to your dashboard</p>
+  </div>
+
+  <div class="login-card">
+    <!-- Role Selection Tabs -->
+    <div class="role-tabs">
+      <div 
+        class="role-tab" 
+        [class.active]="selectedRole === 'CUSTOMER'" 
+        (click)="selectRole('CUSTOMER')">
+        <span class="icon">👤</span>
+        Customer
+      </div>
+      <div 
+        class="role-tab" 
+        [class.active]="selectedRole === 'STAFF'" 
+        (click)="selectRole('STAFF')">
+        <span class="icon">💼</span>
+        Staff
+      </div>
+      <div 
+        class="role-tab" 
+        [class.active]="selectedRole === 'SHOP_OWNER'" 
+        (click)="selectRole('SHOP_OWNER')">
+        <span class="icon">🏢</span>
+        Seller
+      </div>
+      <div 
+        class="role-tab" 
+        [class.active]="selectedRole === 'ADMIN'" 
+        (click)="selectRole('ADMIN')">
+        <span class="icon">🛡️</span>
+        Admin
+      </div>
+    </div>
+
+    <!-- Active Role Indicator -->
+    <div class="active-role-indicator">
+      Signing in as: <strong>{{ selectedRole }}</strong>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-banner">
+      {{ errorMessage }}
+    </div>
+
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+      <div class="input-group">
+        <label for="username">Username</label>
+        <input 
+          type="text" 
+          id="username" 
+          name="username" 
+          [(ngModel)]="credentials.username" 
+          required
+        />
+      </div>
+
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input 
+          type="password" 
+          id="password" 
+          name="password" 
+          [(ngModel)]="credentials.password" 
+          required
+        />
+      </div>
+
+      <div class="form-options">
+        <label class="checkbox-container">
+          <input type="checkbox" />
+          <span class="checkmark"></span>
+          Remember me
+        </label>
+        <a href="#" class="forgot-pwd">Forgot password?</a>
+      </div>
+
+      <button type="submit" [disabled]="!loginForm.form.valid || isLoading" class="btn-primary">
+        <span *ngIf="!isLoading">Sign In</span>
+        <span *ngIf="isLoading" class="spinner"></span>
+      </button>
+    </form>
+    
+    <div class="auth-divider">
+      <span>New to BillPoint?</span>
+    </div>
+
+    <a routerLink="/register" class="btn-outline-primary block-btn">Create an account</a>
+  </div>
 </div>
