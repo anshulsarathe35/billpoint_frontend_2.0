@@ -1,11 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --primary-teal: #1e9b89;
+  --primary-teal-hover: #168070;
+  --secondary-teal: #82ccbe;
+  --dark-navy: #0f172a;
+  --text-dark: #1e293b;
+  --text-muted: #64748b;
+  --bg-light: #f8fafc;
+  --bg-white: #ffffff;
+  --border-color: #e2e8f0;
+  --error-color: #ef4444;
+  --success-color: #10b981;
+}
 
 html, body {
   margin: 0;
   padding: 0;
   font-family: 'Inter', sans-serif;
-  background-color: #f4f7fa;
-  color: #333;
+  background-color: var(--bg-light);
+  color: var(--text-dark);
   height: 100%;
 }
 
@@ -23,20 +37,56 @@ html, body {
 button {
   cursor: pointer;
   border: none;
-  border-radius: 8px;
-  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
   transition: all 0.2s ease-in-out;
 }
 
-input {
-  border: 1px solid #ccc;
+.btn-primary {
+  background-color: var(--secondary-teal); /* Lighter teal for standard buttons in mockup */
+  color: var(--bg-white);
+  padding: 12px 24px;
   border-radius: 6px;
-  padding: 10px 12px;
-  font-family: 'Inter', sans-serif;
-  transition: border 0.2s ease-in-out;
+  font-size: 1rem;
 }
 
-input:focus {
+.btn-primary:not(:disabled):hover {
+  background-color: var(--primary-teal);
+  transform: translateY(-1px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+input, select {
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  transition: border 0.2s ease-in-out, box-shadow 0.2s;
+  width: 100%;
+  color: var(--text-dark);
+}
+
+input::placeholder {
+  color: #94a3b8;
+}
+
+input:focus, select:focus {
   outline: none;
-  border-color: #4a90e2;
+  border-color: var(--primary-teal);
+  box-shadow: 0 0 0 3px rgba(30, 155, 137, 0.1);
+}
+
+a {
+  color: var(--text-dark);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  text-decoration: none;
 }
