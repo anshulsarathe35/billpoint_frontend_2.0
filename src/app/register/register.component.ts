@@ -36,8 +36,12 @@ export class RegisterComponent {
       },
 
       error: (err) => {
-        this.error = err.error.message;
-      }
+
+  console.log("Register error:", err);
+
+  this.error = err?.error?.message || "Registration failed";
+
+}
 
     });
 
