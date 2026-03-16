@@ -136,3 +136,11 @@
     padding: 20px;
   }
 }
+
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 14px;
+}

@@ -2,22 +2,22 @@
   <!-- Sidebar -->
   <aside class="sidebar customer-sidebar">
     <div class="sidebar-header">
-      <div class="logo">🎯 BillPoint</div>
+      <div class="logo"> BillPoint</div>
       <div class="role-badge cust-badge">Valued Customer</div>
     </div>
     
     <nav class="nav-menu">
       <button [class.active]="activeTab === 'history'" (click)="activeTab = 'history'" class="nav-item">
-        <span class="icon">🛒</span> Purchase History
+        <span class="icon"></span> Purchase History
       </button>
       <button [class.active]="activeTab === 'offers'" (click)="activeTab = 'offers'" class="nav-item">
-        <span class="icon">🎉</span> My Offers & Deals
+        <span class="icon"></span> My Offers & Deals
       </button>
     </nav>
     
     <div class="sidebar-footer">
       <button class="btn-logout" (click)="logout()">
-        <span class="icon">🚪</span> Logout
+        <span class="icon"></span> Logout
       </button>
     </div>
   </aside>
@@ -79,7 +79,7 @@
         </div>
         
         <div *ngIf="offers.length === 0" class="empty-offers">
-          <div class="icon">🎁</div>
+          <div class="icon"></div>
           <h4>No active offers right now</h4>
           <p>Check back later for exclusive deals from your favorite shops.</p>
         </div>

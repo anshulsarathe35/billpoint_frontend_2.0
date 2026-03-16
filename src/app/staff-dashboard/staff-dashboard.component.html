@@ -2,25 +2,25 @@
   <!-- Sidebar -->
   <aside class="sidebar staff-sidebar">
     <div class="sidebar-header">
-      <div class="logo">🎯 BillPoint</div>
+      <div class="logo"> BillPoint</div>
       <div class="role-badge staff-badge">Staff Member</div>
     </div>
     
     <nav class="nav-menu">
       <button [class.active]="activeTab === 'billing'" (click)="activeTab = 'billing'" class="nav-item">
-        <span class="icon">🧾</span> POS & Billing
+        <span class="icon"></span> POS & Billing
       </button>
       <button [class.active]="activeTab === 'customers'" (click)="activeTab = 'customers'" class="nav-item">
-        <span class="icon">👥</span> Customers
+        <span class="icon"></span> Customers
       </button>
       <button [class.active]="activeTab === 'attendance'" (click)="activeTab = 'attendance'" class="nav-item">
-        <span class="icon">⏱️</span> Attendance
+        <span class="icon"></span> Attendance
       </button>
     </nav>
     
     <div class="sidebar-footer">
       <button class="btn-logout" (click)="logout()">
-        <span class="icon">🚪</span> Logout
+        <span class="icon"></span> Logout
       </button>
     </div>
   </aside>

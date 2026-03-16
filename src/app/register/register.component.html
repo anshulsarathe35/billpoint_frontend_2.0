@@ -1,6 +1,6 @@
 <div class="login-wrapper">
   <div class="logo-top">
-    <div class="icon">💻</div>
+    
     <h1>BillPoint</h1>
   </div>
   
@@ -21,7 +21,7 @@
     <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
       
       <div class="input-group">
-        <label>Shop/Owner Name</label>
+        <label>Username</label>
         <input
           type="text"
           name="ownerName"
@@ -43,7 +43,7 @@
       </div>
 
       <div class="input-group">
-        <label>Username</label>
+        <label>Email</label>
         <input
           type="text"
           name="username"
@@ -65,14 +65,21 @@
       </div>
 
       <!-- Hidden fields to maintain backend compatibility -->
-      <input type="hidden" name="role" [(ngModel)]="form.role" value="SHOP_OWNER">
+      <!-- <input type="hidden" name="role" [(ngModel)]="form.role" value="SHOP_OWNER"> -->
+       <div class="input-group">
+  <label>Select Role</label>
+  <select name="role" [(ngModel)]="form.role" required>
+    <option value="CUSTOMER">Customer</option>
+    <option value="SHOP_OWNER">Shop Owner</option>
+  </select>
+</div>
 
       <button
         type="submit"
         [disabled]="!registerForm.form.valid"
         class="btn-primary"
       >
-        Register Shop
+        Register
       </button>
 
     </form>
